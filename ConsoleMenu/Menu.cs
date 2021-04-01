@@ -132,10 +132,6 @@ namespace ConsoleMenu
                 selected = true;
 
             }
-
-
-
-
         }
 
 
@@ -146,8 +142,6 @@ namespace ConsoleMenu
 
         int Left { get; set; }
         int Top { get; set; }
-
-
 
         string Caption { get; set; }
 
