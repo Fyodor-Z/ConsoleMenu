@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ConsoleMenu
@@ -67,6 +68,19 @@ namespace ConsoleMenu
     public class Group
     {
         public string Number { get; set; }
+        public void GetInfo()
+        {
+            var studentsList = DataStorage.Instance.Students.Where(s => s.Group == this).Select(s => s.FullName);
+            Console.Clear();
+            Console.ResetColor();
+            Console.WriteLine($"Group: {Number}");
+            Console.WriteLine($"Students:");
+            Console.WriteLine(string.Join(", ", studentsList));
+            Console.WriteLine();
+            Console.WriteLine("<Press any key to continue>");
+            Console.ReadKey();
+
+        }
     }
 
     public class Subject
