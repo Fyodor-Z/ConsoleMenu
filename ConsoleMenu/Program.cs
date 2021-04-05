@@ -61,6 +61,22 @@ namespace ConsoleMenu
             chooseSubj.Activate();
         }
 
+
+        static void GetGroupInfo()
+        {
+            //Create choice menu and update menu items of choose menu
+            Menu chooseGroup = new Menu(15, 15, "Choose group");
+            chooseGroup.menuItems = new List<Menu.MenuItem>();
+            chooseGroup.esc = subjMenu.Activate;
+            for (int i = 0; i < DataStorage.Instance.Groups.Count; i++)
+            {
+                Menu.MenuItem Item = new Menu.MenuItem { Caption = DataStorage.Instance.Groups[i].Number, itemAction = DataStorage.Instance.Groups[i].GetInfo };
+                Item.itemAction += chooseGroup.Activate;
+                chooseGroup.menuItems.Add(Item);
+            }
+            chooseGroup.Activate();
+        }
+
         static void Exit()
         {
             Environment.Exit(0);
@@ -146,10 +162,19 @@ namespace ConsoleMenu
             subjMenu.esc = mainMenu.Activate;  //Action on esc pressed
 
             Menu.MenuItem sbjAItem0 = new Menu.MenuItem { Caption = "Get info", itemAction = GetSublectInfo }; //action chooseStudent menu for choice
-            Menu.MenuItem sbjAItem1 = new Menu.MenuItem { Caption = "Add teacher", itemAction = Exit };
-            Menu.MenuItem sbjAItem2 = new Menu.MenuItem { Caption = "Edit teacher", itemAction = Exit };
+            Menu.MenuItem sbjAItem1 = new Menu.MenuItem { Caption = "Add subject", itemAction = Exit };
+            Menu.MenuItem sbjAItem2 = new Menu.MenuItem { Caption = "Edit subject", itemAction = Exit };
             Menu.MenuItem sbjAItem3 = new Menu.MenuItem { Caption = "Main menu", itemAction = mainMenu.Activate };
             subjMenu.menuItems = new List<Menu.MenuItem> { sbjAItem0, sbjAItem1, sbjAItem2, sbjAItem3 };
+
+            //SubjActions
+            grMenu.esc = mainMenu.Activate;  //Action on esc pressed
+
+            Menu.MenuItem grAItem0 = new Menu.MenuItem { Caption = "Get info", itemAction = GetGroupInfo }; //action chooseStudent menu for choice
+            Menu.MenuItem grAItem1 = new Menu.MenuItem { Caption = "Add group", itemAction = Exit };
+            Menu.MenuItem grAItem2 = new Menu.MenuItem { Caption = "Edit group", itemAction = Exit };
+            Menu.MenuItem grAItem3 = new Menu.MenuItem { Caption = "Main menu", itemAction = mainMenu.Activate };
+            grMenu.menuItems = new List<Menu.MenuItem> { grAItem0, grAItem1, grAItem2, grAItem3 };
 
 
             mainMenu.Activate();
