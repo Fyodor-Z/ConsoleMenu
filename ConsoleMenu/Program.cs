@@ -20,9 +20,10 @@ namespace ConsoleMenu
             //Create choice menu and update menu items of choose menu
             Menu chooseStudent = new Menu(40, 15, "Choose student");
             chooseStudent.menuItems = new List<Menu.MenuItem>();
+            chooseStudent.esc = studentMenu.Activate;
             for (int i = 0; i < DataStorage.Instance.Students.Count; i++)
             {
-                chooseStudent.esc = studentMenu.Activate;
+               
                 Menu.MenuItem Item = new Menu.MenuItem { Caption = DataStorage.Instance.Students[i].FullName, itemAction = DataStorage.Instance.Students[i].GetInfo };
                 Item.itemAction += studentMenu.Activate;
                 chooseStudent.menuItems.Add(Item);
@@ -33,16 +34,31 @@ namespace ConsoleMenu
         static void GetTeacherInfo()
         {
             //Create choice menu and update menu items of choose menu
-            Menu chooseStudent = new Menu(40, 15, "Choose teacher");
-            chooseStudent.menuItems = new List<Menu.MenuItem>();
-            for (int i = 0; i < DataStorage.Instance.Students.Count; i++)
+            Menu chooseTeacher = new Menu(40, 15, "Choose teacher");
+            chooseTeacher.menuItems = new List<Menu.MenuItem>();
+            chooseTeacher.esc = teachMenu.Activate;
+            for (int i = 0; i < DataStorage.Instance.Teachers.Count; i++)
             {
-                chooseStudent.esc = studentMenu.Activate;
-                Menu.MenuItem Item = new Menu.MenuItem { Caption = DataStorage.Instance.Students[i].FullName, itemAction = DataStorage.Instance.Students[i].GetInfo };
-                Item.itemAction += studentMenu.Activate;
-                chooseStudent.menuItems.Add(Item);
+                Menu.MenuItem Item = new Menu.MenuItem { Caption = DataStorage.Instance.Teachers[i].FullName, itemAction = DataStorage.Instance.Teachers[i].GetInfo };
+                Item.itemAction += teachMenu.Activate;
+                chooseTeacher.menuItems.Add(Item);
             }
-            chooseStudent.Activate();
+            chooseTeacher.Activate();
+        }
+
+        static void GetSublectInfo()
+        {
+            //Create choice menu and update menu items of choose menu
+            Menu chooseSubj = new Menu(40, 15, "Choose subject");
+            chooseSubj.menuItems = new List<Menu.MenuItem>();
+            chooseSubj.esc = subjMenu.Activate;
+            for (int i = 0; i < DataStorage.Instance.Subjects.Count; i++)
+            {
+                Menu.MenuItem Item = new Menu.MenuItem { Caption = DataStorage.Instance.Subjects[i].Title, itemAction = DataStorage.Instance.Subjects[i].GetInfo };
+                Item.itemAction += chooseSubj.Activate;
+                chooseSubj.menuItems.Add(Item);
+            }
+            chooseSubj.Activate();
         }
 
         static void Exit()
@@ -91,14 +107,9 @@ namespace ConsoleMenu
             teacher1.Subjects = new List<Subject> { subject1, subject2 };
             Teacher teacher2 = new Teacher { FirstName = "Petr", LastName = "Kabanevich" };
             teacher2.Subjects = new List<Subject> { subject3, subject4 };
-            
-            //Menus initializtion
 
-            //Menu mainMenu = new Menu(24, 15, "Main Menu");
-            //Menu studentMenu = new Menu(24, 12, "Students");
-            //Menu grMenu = new Menu(24, 15, "Groups");
-            //Menu teachMenu = new Menu(24, 15, "Teachers");
-            //Menu subjMenu = new Menu(24, 15, "Subjects");
+            DataStorage.Instance.Teachers.Add(teacher1);
+            DataStorage.Instance.Teachers.Add(teacher2);
 
 
 
@@ -123,13 +134,22 @@ namespace ConsoleMenu
             studentMenu.menuItems = new List<Menu.MenuItem> { sAItem0, sAItem1, sAItem2, sAItem3 };
 
             //TeacherActions
-            studentMenu.esc = mainMenu.Activate;  //Action on esc pressed
+            teachMenu.esc = mainMenu.Activate;  //Action on esc pressed
 
-            Menu.MenuItem sAItem0 = new Menu.MenuItem { Caption = "Get info", itemAction = GetStudentInfo }; //action chooseStudent menu for choice
-            Menu.MenuItem sAItem1 = new Menu.MenuItem { Caption = "Add teacher", itemAction = Exit };
-            Menu.MenuItem sAItem2 = new Menu.MenuItem { Caption = "Edit teacher", itemAction = Exit };
-            Menu.MenuItem sAItem3 = new Menu.MenuItem { Caption = "Main menu", itemAction = mainMenu.Activate };
-            studentMenu.menuItems = new List<Menu.MenuItem> { sAItem0, sAItem1, sAItem2, sAItem3 };
+            Menu.MenuItem tAItem0 = new Menu.MenuItem { Caption = "Get info", itemAction = GetTeacherInfo }; //action chooseStudent menu for choice
+            Menu.MenuItem tAItem1 = new Menu.MenuItem { Caption = "Add teacher", itemAction = Exit };
+            Menu.MenuItem tAItem2 = new Menu.MenuItem { Caption = "Edit teacher", itemAction = Exit };
+            Menu.MenuItem tAItem3 = new Menu.MenuItem { Caption = "Main menu", itemAction = mainMenu.Activate };
+            teachMenu.menuItems = new List<Menu.MenuItem> { tAItem0, tAItem1, tAItem2, tAItem3 };
+
+            //SubjActions
+            subjMenu.esc = mainMenu.Activate;  //Action on esc pressed
+
+            Menu.MenuItem sbjAItem0 = new Menu.MenuItem { Caption = "Get info", itemAction = GetSublectInfo }; //action chooseStudent menu for choice
+            Menu.MenuItem sbjAItem1 = new Menu.MenuItem { Caption = "Add teacher", itemAction = Exit };
+            Menu.MenuItem sbjAItem2 = new Menu.MenuItem { Caption = "Edit teacher", itemAction = Exit };
+            Menu.MenuItem sbjAItem3 = new Menu.MenuItem { Caption = "Main menu", itemAction = mainMenu.Activate };
+            subjMenu.menuItems = new List<Menu.MenuItem> { sbjAItem0, sbjAItem1, sbjAItem2, sbjAItem3 };
 
 
             mainMenu.Activate();

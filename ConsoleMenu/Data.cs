@@ -64,13 +64,25 @@ namespace ConsoleMenu
     public class Teacher : Person
     {
         public List<Subject> Subjects { get; set; }
+
+        public void GetInfo()
+        {
+            Console.Clear();
+            Console.ResetColor();
+            Console.WriteLine($"Teacher: {FullName}");
+            Console.WriteLine($"Subjects:");
+            Console.WriteLine(string.Join(", ", Subjects.Select(s=>s.Title)));
+            Console.WriteLine();
+            Console.WriteLine("<Press any key to continue>");
+            Console.ReadKey();
+        }
     }
     public class Group
     {
         public string Number { get; set; }
         public void GetInfo()
         {
-            var studentsList = DataStorage.Instance.Students.Where(s => s.Group == this).Select(s => s.FullName);
+            var studentsList = DataStorage.Instance.Students.Where(s => s.Group == this).Select(s => s.FullName).ToList();
             Console.Clear();
             Console.ResetColor();
             Console.WriteLine($"Group: {Number}");
@@ -86,5 +98,18 @@ namespace ConsoleMenu
     public class Subject
     {
         public string Title { get; set; }
+
+        public void GetInfo()
+        {
+            var teachersList = DataStorage.Instance.Teachers.Where(t => t.Subjects.Contains(this)).Select(t => t.FullName).ToList();
+            Console.Clear();
+            Console.ResetColor();
+            Console.WriteLine($"Subject: {Title}");
+            Console.WriteLine($"Teachers:");
+            Console.WriteLine(string.Join(", ", teachersList));
+            Console.WriteLine();
+            Console.WriteLine("<Press any key to continue>");
+            Console.ReadKey();
+        }
     }
 }
