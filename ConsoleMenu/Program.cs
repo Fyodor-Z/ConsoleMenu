@@ -194,9 +194,11 @@ namespace ConsoleMenu
 
             Console.WriteLine($"{student1.FullName} validation is {student1Validate}");
             Console.WriteLine($"{teacher1.FullName} validation is {teacher1Validate}");
+            Console.WriteLine("<Press any key>");
+            Console.ReadKey();
 
 
-            //mainMenu.Activate();
+            mainMenu.Activate();
 
 
 
