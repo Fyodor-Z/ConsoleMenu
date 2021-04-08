@@ -5,6 +5,18 @@ using System.Text;
 
 namespace ConsoleMenu
 {
+    public class NameFirstSymbolValidation : System.Attribute
+    {
+        public bool FirstLetterIsUpper { get; set; }
+
+        public NameFirstSymbolValidation()
+        { }
+
+        public NameFirstSymbolValidation(bool isUpper)
+        {
+            FirstLetterIsUpper = isUpper;
+        }
+    }
 
     public class DataStorage
     {
@@ -37,6 +49,7 @@ namespace ConsoleMenu
 
     }
 
+    [NameFirstSymbolValidation(true)]
     public class Person
     {
         public string FirstName { get; set; }

@@ -23,7 +23,7 @@ namespace ConsoleMenu
             chooseStudent.esc = studentMenu.Activate;
             for (int i = 0; i < DataStorage.Instance.Students.Count; i++)
             {
-               
+
                 Menu.MenuItem Item = new Menu.MenuItem { Caption = DataStorage.Instance.Students[i].FullName, itemAction = DataStorage.Instance.Students[i].GetInfo };
                 Item.itemAction += studentMenu.Activate;
                 chooseStudent.menuItems.Add(Item);
@@ -85,8 +85,6 @@ namespace ConsoleMenu
 
 
         {
-
-
             //Initialization of some data objects
             //groups
             Group gr1 = new Group { Number = "C1" };
@@ -119,7 +117,7 @@ namespace ConsoleMenu
 
             //teachers
 
-            Teacher teacher1 = new Teacher { FirstName = "Arkadii", LastName = "Vasiliev" };
+            Teacher teacher1 = new Teacher { FirstName = "Arkadii", LastName = "vasiliev" };
             teacher1.Subjects = new List<Subject> { subject1, subject2 };
             Teacher teacher2 = new Teacher { FirstName = "Petr", LastName = "Kabanevich" };
             teacher2.Subjects = new List<Subject> { subject3, subject4 };
@@ -177,7 +175,28 @@ namespace ConsoleMenu
             grMenu.menuItems = new List<Menu.MenuItem> { grAItem0, grAItem1, grAItem2, grAItem3 };
 
 
-            mainMenu.Activate();
+            static bool ValidatePerson(Person person)
+            {
+                Type t = typeof(Person);
+                object[] attrs = t.GetCustomAttributes(false);
+                foreach (NameFirstSymbolValidation attr in attrs)
+                {
+                    if ((char.IsUpper((person.FirstName[0])) == attr.FirstLetterIsUpper) &
+                            (char.IsUpper((person.LastName[0])) == attr.FirstLetterIsUpper))
+                        return true;
+                    else return false;
+                }
+                return true;
+            }
+
+            bool student1Validate = ValidatePerson(student1);
+            bool teacher1Validate = ValidatePerson(teacher1);
+
+            Console.WriteLine($"{student1.FullName} validation is {student1Validate}");
+            Console.WriteLine($"{teacher1.FullName} validation is {teacher1Validate}");
+
+
+            //mainMenu.Activate();
 
 
 
